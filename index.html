@@ -821,6 +821,14 @@ footer .mono+.mono{color:var(--muted)}
   .respiro.podio6::after{inset:0 0 auto 0;height:calc(100vw*2/3);background:linear-gradient(180deg,transparent 75%,#121716 100%)}
   .respiro.podio6 .wrap{height:auto;padding-top:12px;padding-bottom:48px}
 }
+
+.ev-tabs{display:flex;gap:0;border-bottom:1px solid var(--line);margin-bottom:20px;overflow-x:auto;scrollbar-width:none}
+.ev-tabs::-webkit-scrollbar{display:none}
+.ev-tab{all:unset;cursor:pointer;flex:0 0 auto;padding:10px 22px 12px 0;margin-right:4px;color:var(--muted);box-shadow:inset 0 -3px 0 transparent;transition:color .25s,box-shadow .3s}
+.ev-tab b{display:block;font-weight:720;font-variation-settings:"wdth" 118;text-transform:uppercase;font-size:clamp(14px,1.25vw,17px);letter-spacing:.01em}
+.ev-tab small{display:block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
+.ev-tab[aria-selected="true"]{color:var(--ink);box-shadow:inset 0 -3px 0 var(--accent)}
+.ev-tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -896,9 +904,10 @@ footer .mono+.mono{color:var(--muted)}
       </a>
     </div>
     <div class="reels rv">
-      <div class="reels-head"><span class="mono">Cobertura do Sul-Americano da Juventude · @cbhoficial</span><span class="mono reels-hint" aria-hidden="true">Passe o mouse para navegar</span></div>
-      <div class="reel-track" id="reelTrack" aria-label="Cobertura do Sul-Americano da Juventude no Instagram da CBH"><div class="reel-row" id="reelRow"></div></div>
-      <p class="note">Cada card abre a publicação no Instagram da CBH. É esse padrão de cobertura que acompanha as seletivas da Juventude 2027, com os 3 Reels e 6 posts dedicados à Natura Equus.</p>
+      <div class="reels-head"><span class="mono">Cobertura da Juventude no @cbhoficial</span><span class="mono reels-hint" aria-hidden="true">Passe o mouse para navegar</span></div>
+      <div class="ev-tabs" role="tablist" id="evTabs" aria-label="Eventos da Juventude"></div>
+      <div class="reel-track" id="reelTrack" aria-label="Publicações da Juventude no Instagram da CBH"><div class="reel-row" id="reelRow"></div></div>
+      <p class="note">Cada card abre a publicação no Instagram da CBH. As seletivas são onde a Natura Equus aparece em 2027, com esse mesmo padrão de cobertura e os 3 Reels e 6 posts dedicados à marca.</p>
     </div>
   </div>
 </section>
@@ -1117,7 +1126,14 @@ footer .mono+.mono{color:var(--muted)}
    ===================================================================== */
 const instagram=[["60.968","Seguidores"],["2,3 mi","Visualizações"],["209,8 mil","Contas alcançadas"],["74 mil","Interações"]];
 /* Cobertura do Sul-Americano da Juventude no Instagram @cbhoficial. Capas originais de cada publicação (assets/sula-XX.jpg); [id, tipo, paisagem inteira com fundo desfocado, enquadramento]. */
-const reels=[["DfKl8ZetXlD","Reel"],["DfKPpZAFpMe","Fotos",1],["DfMmG5AtA_q","Reel"],["DfK6BEBNZx4","Reel"],["DfNc49CoBSw","Fotos",0,"51% 50%"],["DfHwqc0B6Al","Reel"]];
+/* Cobertura da Juventude no @cbhoficial, por evento. Capas originais de cada publicação.
+   [código do post, tipo, capa inteira sobre fundo verde, enquadramento] */
+const eventos=[
+ {nome:"3ª Seletiva · Casa CBH",sub:"CSN3* · SP",src:"ig",posts:[["DYnZhS0tiBg","Reel"],["DYudHYDNvYR","Reel",1],["DYva7x4tcd1","Reel",0,"56% 50%"],["DYpNrJNtGbJ","Reel",0,"47% 50%"],["DYsP-08thYp","Reel",0,"44% 50%"],["DYn2SfqtQEr","Reel"],["DYvGirktkEs","Reel"],["DYpuUH4t4cf","Reel",0,"24% 50%"],["DYs5kORtxMZ","Reel"]]},
+ {nome:"4ª Seletiva · Hípica Paulista",sub:"SHP · São Paulo",src:"ig",posts:[["DZniE8TlqJH","Fotos",0,"44% 50%"],["DZlhOtLGhxD","Fotos",0,"47% 50%"],["DZhvg7iFtiM","Fotos",1],["DZsd6wjlqxu","Fotos",1]]},
+ {nome:"Campeonato Brasileiro",sub:"Juventude 2026",src:"ig",posts:[["DbA5LqTFu9R","Fotos",0,"44% 50%"],["Da8SSH-ltXe","Fotos",0,"46% 50%"],["Da_oqH8jaAd","Fotos",0,"49% 50%"],["Da_jPbWlg5-","Fotos",0,"52% 50%"],["Da_ySLCjb3M","Fotos",0,"53% 50%"],["Da_4qR6jTB4","Fotos",0,"47% 50%"]]},
+ {nome:"Sul-Americano",sub:"Juventude 2026",src:"sula",posts:[["DfKl8ZetXlD","Reel"],["DfKPpZAFpMe","Fotos",1],["DfMmG5AtA_q","Reel"],["DfK6BEBNZx4","Reel"],["DfNc49CoBSw","Fotos",0,"51% 50%"],["DfHwqc0B6Al","Reel"]]}
+];
 
 /* Kits por colocação: [etapa regular, Brasileiro] */
 const kits=[["1º",4,8],["2º",3,6],["3º",2,4],["4º",1,2],["5º",1,1],["6º",1,1]];
@@ -1147,7 +1163,9 @@ const brl=v=>v.toLocaleString("pt-BR",{style:"currency",currency:"BRL",minimumFr
 
 $("#digital").innerHTML=instagram.map(([v,l])=>`<div><span class="n">${v}</span><span class="mono">${l}</span></div>`).join("");
 
-$("#reelRow").innerHTML=reels.map(([id,tp,land,pos],i)=>{const n=String(i+1).padStart(2,"0"),src=`assets/sula-${n}.jpg`,vid=tp==="Reel";return `<a class="reel${land?" land":""}" href="https://www.instagram.com/p/${id}/" target="_blank" rel="noopener" aria-label="Abrir ${vid?"o Reel":"as fotos"} ${n} da cobertura do Sul-Americano da Juventude no Instagram da CBH">${land?`<img class="blur" src="${src}" alt="" loading="lazy">`:""}<img class="cov" src="${src}" alt="" loading="lazy"${pos?` style="object-position:${pos}"`:""}><span class="reel-play" aria-hidden="true">${vid?'<svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>':'<svg viewBox="0 0 24 24"><rect x="4" y="6" width="12" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 3.5h11a1.5 1.5 0 0 1 1.5 1.5v11" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>'}</span><span class="reel-cap"><span>Sul-Americano da Juventude</span><b>${tp} ${n} <i aria-hidden="true">↗</i></b></span></a>`}).join("");
+function renderReels(e){const ev=eventos[e];$("#reelRow").style.transform="";$("#reelRow").innerHTML=ev.posts.map(([id,tp,land,pos],i)=>{const n=String(i+1).padStart(2,"0"),src=ev.src==="sula"?`assets/sula-${n}.jpg`:`assets/ig-${id}.jpg`,vid=tp==="Reel";return `<a class="reel${land?" land":""}" href="https://www.instagram.com/p/${id}/" target="_blank" rel="noopener" aria-label="Abrir ${vid?"o Reel":"as fotos"} ${n} de ${ev.nome} no Instagram da CBH"><img class="cov" src="${src}" alt="" loading="lazy"${pos?` style="object-position:${pos}"`:""}><span class="reel-play" aria-hidden="true">${vid?'<svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>':'<svg viewBox="0 0 24 24"><rect x="4" y="6" width="12" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 3.5h11a1.5 1.5 0 0 1 1.5 1.5v11" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>'}</span><span class="reel-cap"><span>${ev.nome}</span><b>${tp} ${n} <i aria-hidden="true">↗</i></b></span></a>`}).join("");const t=$("#reelTrack");if(t)t.scrollLeft=0}
+$("#evTabs").innerHTML=eventos.map((ev,i)=>`<button type="button" role="tab" class="ev-tab" aria-selected="${i===0}"><b>${ev.nome}</b><small>${ev.sub} · ${ev.posts.length} posts</small></button>`).join("");
+(function(){const bs=[...document.querySelectorAll("#evTabs .ev-tab")];const go=i=>{bs.forEach((b,j)=>{b.setAttribute("aria-selected",String(j===i));b.tabIndex=j===i?0:-1});renderReels(i)};bs.forEach((b,i)=>{b.addEventListener("click",()=>go(i));b.addEventListener("keydown",e=>{const d=e.key==="ArrowRight"?1:e.key==="ArrowLeft"?-1:0;if(d){e.preventDefault();e.stopPropagation();const n=(i+d+bs.length)%bs.length;go(n);bs[n].focus()}})});go(0)})();
 
 /* tabs genéricas */
 function tabs(listSel,items,label,render,start=0){
