@@ -838,6 +838,8 @@ footer .mono+.mono{color:var(--muted)}
 .cv-stats .st-tag{align-self:flex-start;margin-top:6px;font-style:normal;font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;line-height:1.4;text-transform:uppercase;color:#D9BC82;border:1px solid rgba(217,188,130,.45);padding:5px 8px;max-width:30ch}
 .reels-head .yr{font-weight:500;color:var(--accent)}
 .note .dt-alert{color:#D9BC82;font-weight:500}
+.bonus p strong{color:#F2F3F1;font-weight:650}
+.bonus p.bonus-note{margin-top:8px;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#D9BC82}
 </style>
 </head>
 <body>
@@ -1061,7 +1063,7 @@ footer .mono+.mono{color:var(--muted)}
     </div>
     <div class="bonus rv">
       <span class="ic" aria-hidden="true">+</span>
-      <div><b>Estande no CSN de maio</b><p>Benefício exclusivo do pacote completo: cessão de espaço para a Natura Equus montar o seu estande. A CBH fornece apenas o espaço; estrutura, mobiliário, montagem, equipamentos e operação ficam com a Natura Equus.</p></div>
+      <div><b>Estande no CSN Casa CBH</b><p>Benefício exclusivo do pacote completo: cessão de espaço para a Natura Equus montar o seu estande <strong>somente no evento CSN Casa CBH</strong> (3ª Seletiva, previsto para 7 a 9 de maio de 2027). A CBH fornece apenas o espaço; estrutura, mobiliário, montagem, equipamentos e operação ficam com a Natura Equus.</p><p class="bonus-note">Sujeito à aprovação do calendário oficial CBH 2027.</p></div>
     </div>
     <details class="deliv">
       <summary>Ver entregáveis por propriedade</summary>
@@ -1150,13 +1152,13 @@ const platforms=[
   {name:"Programa Juventude CBH 2027",price:"R$ 100 mil",short:"R$ 100 mil",per:"+ produtos de premiação",idea:"Natura Equus como Apoiadora do programa nas 6 etapas da Juventude, com conteúdo nos canais oficiais e produtos no pódio.",items:["Apoiadora nas 6 etapas","3 Reels no feed da CBH","6 posts no feed da CBH","Logomarca no site da CBH","Premiação do 1º ao 6º lugar","180 kits, 410 unidades"]},
   {name:"Obstáculo personalizado",price:"R$ 25 mil",per:"Casa CBH",idea:"Um obstáculo com a identidade visual da Natura Equus na pista da Casa CBH, sujeito aos requisitos técnicos e à programação.",items:["Identidade Natura Equus","Na pista da Casa CBH","Presença nas provas","Registro em fotos e vídeos"]},
   {name:"Placas de pista",price:"R$ 10 mil",per:"10 eventos",idea:"Exposição da marca em placas de pista em 10 eventos da Casa CBH, com posicionamento definido pela organização.",items:["10 eventos da Casa CBH","Marca no campo de visão","Presença em fotos oficiais","Posição definida pela organização"]},
-  {name:"Pacote completo",full:true,price:"R$ 120 mil",short:"R$ 120 mil",old:"R$ 135 mil",per:"+ produtos de premiação",idea:"As três propriedades em uma só contratação, com redução de R$ 15 mil e um benefício exclusivo.",items:["Programa Juventude CBH 2027","Obstáculo personalizado","Placas em 10 eventos","Estande no CSN de maio"],gift:"<b>Benefício adicional:</b> cessão de espaço para estande no CSN de maio."}
+  {name:"Pacote completo",full:true,price:"R$ 120 mil",short:"R$ 120 mil",old:"R$ 135 mil",per:"+ produtos de premiação",idea:"As três propriedades em uma só contratação, com redução de R$ 15 mil e um benefício exclusivo.",items:["Programa Juventude CBH 2027","Obstáculo personalizado","Placas em 10 eventos","Estande no CSN Casa CBH"],gift:"<b>Benefício adicional:</b> cessão de espaço para estande somente no CSN Casa CBH, sujeito à aprovação do calendário."}
 ];
 
 const delivCols=["Juventude","Obstáculo","Placas","Pacote"];
 const deliv=[
   ["Apoiadora do Programa Juventude",1,0,0,1],["3 Reels e 6 posts no feed da CBH",1,0,0,1],["Logomarca no site da CBH",1,0,0,1],["Produtos na premiação, 1º ao 6º",1,0,0,1],
-  ["Obstáculo com identidade da marca",0,1,0,1],["Placas de pista em 10 eventos",0,0,1,1],["Espaço para estande no CSN de maio",0,0,0,1]
+  ["Obstáculo com identidade da marca",0,1,0,1],["Placas de pista em 10 eventos",0,0,1,1],["Espaço para estande no CSN Casa CBH",0,0,0,1]
 ];
 
 /* Parcelas do pacote completo (2027) */
